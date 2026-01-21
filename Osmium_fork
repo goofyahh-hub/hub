@@ -1,4 +1,5 @@
 -- a fork of Osmium library by Trix#2794 / Julman#1234
+
 --[[
 
                                                                                                                                                                       
@@ -490,6 +491,7 @@ local destructionHooks = {}
                 local callback = callback or function (_) end
                 local placeholder = placeholder or "Write Here"
                 local description = description or ""
+                local hasDesc = #description > 0
 
                 local textbox = {}
 
@@ -500,14 +502,14 @@ local destructionHooks = {}
                     Font = Font,
                     Name = "TextBox",
                     Position = UDim2.new(0.348881781, 0, 2.46790123, 0),
-                    Size = UDim2.new(0, 438, 0, _if(#description > 0, 50, 35)),
+                    Size = UDim2.new(0, 438, 0, hasDesc and 50 or 35),
                     ZIndex = 0,
                     TextSize = 14,
                     BackgroundColor3 = Colors.Gray.DarkButton
                 })
                 
                 -- Description label
-                if #description > 0 then
+                if hasDesc then
                     CreateInstance("TextLabel", textBoxLabel, {
                         TextColor3 = Color3.fromRGB(150, 150, 150),
                         Text = "  " .. description,
@@ -529,7 +531,7 @@ local destructionHooks = {}
                     Text = "",
                     AnchorPoint = Vector2.new(0, 1),
                     Font = Font,
-                    Position = UDim2.new(0.796531916, 0, _if(#description > 0, 0.55, 0.927345312), 0),
+                    Position = UDim2.new(0.796531916, 0, hasDesc and 0.55 or 0.927345312, 0),
                     Size = UDim2.new(0, 85, 0, 27),
                     PlaceholderText = placeholder,
                     TextSize = 12,
@@ -613,6 +615,7 @@ local destructionHooks = {}
                 end
                 local callback = callback or function (_) end
                 local description = description or ""
+                local hasDesc = #description > 0
 
                 local slider = {}
 
@@ -623,7 +626,7 @@ local destructionHooks = {}
                 local sliderLabel = CreateInstance("TextLabel", tabContainer, {
                     TextColor3 = Colors.White,
                     Text = "  " .. label,
-                    Size = UDim2.new(0, 438, 0, _if(#description > 0, 50, 35)),
+                    Size = UDim2.new(0, 438, 0, hasDesc and 50 or 35),
                     Font = Font,
                     Name = "Slider",
                     Position = UDim2.new(0.349, 0, 0.468, 0),
@@ -643,7 +646,7 @@ local destructionHooks = {}
                 })
                 
                 -- Description label
-                if #description > 0 then
+                if hasDesc then
                     CreateInstance("TextLabel", sliderLabel, {
                         TextColor3 = Color3.fromRGB(150, 150, 150),
                         Text = "  " .. description,
@@ -782,6 +785,7 @@ local destructionHooks = {}
                 local default = default or false
                 local callback = callback or function (_) end
                 local description = description or ""
+                local hasDesc = #description > 0
 
                 local toggle = {}
 
@@ -790,7 +794,7 @@ local destructionHooks = {}
                     TextXAlignment = Enum.TextXAlignment.Left,
                     TextColor3 = Colors.White,
                     AutoButtonColor = false,
-                    Size = UDim2.new(0, 438, 0, _if(#description > 0, 50, 35)),
+                    Size = UDim2.new(0, 438, 0, hasDesc and 50 or 35),
                     Text = "  " .. label,
                     TextSize = 14,
                     BackgroundColor3 = Colors.Gray.DarkButton
@@ -801,7 +805,7 @@ local destructionHooks = {}
                 })
 
                 -- Description label
-                if #description > 0 then
+                if hasDesc then
                     CreateInstance("TextLabel", mainToggleContainer, {
                         TextColor3 = Color3.fromRGB(150, 150, 150),
                         Text = "  " .. description,
@@ -818,7 +822,7 @@ local destructionHooks = {}
 
                 local toggleContainer = CreateInstance("Frame", mainToggleContainer, {
                     Name = "Toggle",
-                    Position = UDim2.new(0.900, 0, _if(#description > 0, 0.25, 0.37), 0),
+                    Position = UDim2.new(0.900, 0, hasDesc and 0.25 or 0.37, 0),
                     ZIndex = 2,
                     Size = UDim2.new(0, 14, 0, 15),
                     BackgroundColor3 = Color3.fromRGB(30, 30, 30)
@@ -837,7 +841,7 @@ local destructionHooks = {}
                     AutoButtonColor = false,
                     Font = Enum.Font.SourceSans,
                     Name = "ToggleBtn",
-                    Position = UDim2.new(0.897, 0, _if(#description > 0, 0.22, 0.341), 0),
+                    Position = UDim2.new(0.897, 0, hasDesc and 0.22 or 0.341, 0),
                     TextTransparency = 1,
                     Size = UDim2.new(0, 37, 0, 17),
                     TextSize = 14,
@@ -854,13 +858,14 @@ local destructionHooks = {}
 
                 local function update(call)
                     local speed = 0.1
+                    local posY = hasDesc and 0.25 or 0.37
 
                     if boolValue.Value == false then
                         toggleButton.UIGradient.Enabled = false
-                        toggleContainer:TweenPosition(UDim2.new(0.900, 0, _if(#description > 0, 0.25, 0.37), 0), "In", "Linear", speed, false)
+                        toggleContainer:TweenPosition(UDim2.new(0.900, 0, posY, 0), "In", "Linear", speed, false)
                     else
                         toggleButton.UIGradient.Enabled = true
-                        toggleContainer:TweenPosition(UDim2.new(0.945, 0, _if(#description > 0, 0.25, 0.37), 0), "Out", "Linear", speed, false)
+                        toggleContainer:TweenPosition(UDim2.new(0.945, 0, posY, 0), "Out", "Linear", speed, false)
 
                         wait(0.05)
                     end
@@ -965,6 +970,7 @@ local destructionHooks = {}
             function tab:CreateButton(name, callback, description)
                 local callback = callback or function (_) end
                 local description = description or ""
+                local hasDesc = #description > 0
 
                 local button = {}
 
@@ -975,7 +981,7 @@ local destructionHooks = {}
                     Position = UDim2.new(0, 0, 0.166284561, 0),
                     TextXAlignment = Enum.TextXAlignment.Left,
                     AutoButtonColor = false,
-                    Size = UDim2.new(0, 438, 0, _if(#description > 0, 50, 35)),
+                    Size = UDim2.new(0, 438, 0, hasDesc and 50 or 35),
                     TextSize = 14,
                     BackgroundColor3 = Colors.Gray.DarkButton
                 })
@@ -985,7 +991,7 @@ local destructionHooks = {}
                 })
 
                 -- Description label
-                if #description > 0 then
+                if hasDesc then
                     CreateInstance("TextLabel", buttonContainer, {
                         TextColor3 = Color3.fromRGB(150, 150, 150),
                         Text = "  " .. description,
@@ -1004,7 +1010,7 @@ local destructionHooks = {}
                     ImageRectSize = Vector2.new(36, 36),
                     Image = "rbxassetid://3926305904",
                     Name = "mouse",
-                    Position = UDim2.new(0.936306903, 0, _if(#description > 0, 0.15, 0.25), 0),
+                    Position = UDim2.new(0.936306903, 0, hasDesc and 0.15 or 0.25, 0),
                     ImageRectOffset = Vector2.new(204, 964),
                     ZIndex = 2,
                     BackgroundTransparency = 1,
